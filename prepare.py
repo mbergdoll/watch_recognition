@@ -5,22 +5,49 @@ import datetime
 import pprint
 import time
 from pathlib import Path
-
-# mpiexec -n 10 python download
+import PIL
+from PIL import Image
 
 # extract url from a list of url to download
 def extract_name_from_name():
-	f = open('Base10000/input_url_file.txt','r')
+	f = open('input/input_url_file.txt','r')
 	list_name = f.readlines()
 	f.close()
 	return list_name
 
 # extract text from a list of text associated to url downloaded
 def extract_text_from_input_file():
-	f = open('Base10000/input_description_file.txt','r')
+	f = open('input/input_description_file.txt','r')
 	list_name = f.readlines()
 	f.close()
 	return list_name
+
+def copy_image( source , text , c):
+	from shutil import copyfile
+	import random
+	classes=[
+		"cartier",
+		"Audemars Piguet",
+		"Richard Mille",
+		"IWC",
+		"Jaeger-Lecoultre",
+		"Hublot",
+		"Rolex",
+		"Patek Philippe"
+	]
+	for name in classes:
+		for train in ["train","val"]:
+			# create directory
+			directory="watches_classed/"+train+"/"+name
+			if not os.path.exists(directory):
+				os.makedirs(directory)
+	for name in classes:
+		if name in text:
+			if random.randint(0, 4)==4:
+				cible = "watches_classed/val/"+name+"/"+str(c)+".jpg"
+			else:
+				cible = "watches_classed/train/"+name+"/"+str(c)+".jpg"
+	copyfile( source , cible )
 
 # for each image in list yet downloaded, we check further points.
 def Analyse_and_filter(list_name):
@@ -30,7 +57,7 @@ def Analyse_and_filter(list_name):
 	output_path = open('output_path.txt','w+')
 	output_text = open('output_text.txt','w+')
 	for name in list_name:
-		path = "Base10000/image/" + str(c) + ".jpg" 
+		path = "watches/" + str(c) + ".jpg" 
 		my_file = Path( path )
 		if my_file.is_file():
 			# image exists
@@ -41,9 +68,14 @@ def Analyse_and_filter(list_name):
 				list_res = list_res + [ l.split('/')[-1].split('px')[-1] ]
 			if name.split('/')[-1].split('px')[-1] not in list_res:
 				text = text.replace('\n','')
+				#try:
+				copy_image( "watches_prepared/"+str(c)+".jpg" , text ,c)
 				output_path.write( str(c) +"\n")
 				output_text.write( str(text) +"\n")	
-		if c%1000==0:
+				#except:
+				#	print("error while copying image...")
+
+		if c%100==0:
 			print( str(c)+" / "+str(tot)+" made..." )
 		c=c+1
 	output_path.close()

@@ -66,3 +66,6 @@ for i in range(size):
 		print( "pas:" + str(pas) )
 	if( rank==i ):
 		boucle( begin+(i*pas) , min( tot , begin+((i+1)*pas) ) , tot , list_name , c)
+
+print("copying images in watch_prepared/ with the same size 32x52 in jpg format")
+os.system("")
