@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Create an AI that can recognize famous wathces like IWC or Hublot due to a deep neural network and convolutional neural network.
+Create an AI that can recognize famous watches like IWC or Hublot due to a deep neural network and convolutional neural network.
 
 ## Prerequisites
 
@@ -18,7 +18,8 @@ If you want to donwload image, You have to download MPI.
 
 ## Pre-processing
 
-Before training, you need to pre-process the data with the command 
+All images will be converted in 32x52 pixels in a JPG format.
+Before training, you need to pre-process the data with the command:
 
 ``` prepare.py ```
 
@@ -28,9 +29,12 @@ We convert image to jpg format and 32x52 pixels.
 
 ``` train.py ```
 
-## Demo
-
-Analyse an image and return the result
+## Demo: It gives statistical data from the results of the training.
 
 ``` demo.py ```
 
+## Analyse an image and return the result: TODO
+
+``` compare.py --image IMAGE ```
+
+where IMAGE is the path of the image. It searches the good brands associated with the watch submitted.
