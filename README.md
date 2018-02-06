@@ -37,4 +37,4 @@ We convert image to jpg format and 32x52 pixels.
 
 ``` compare.py --image IMAGE ```
 
-where IMAGE is the path of the image. It searches the good brands associated with the watch submitted.
+where IMAGE is the path of the image. It searches the good brand associated with the watch submitted.
