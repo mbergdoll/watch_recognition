@@ -33,8 +33,13 @@ We convert image to jpg format and 32x52 pixels.
 
 ``` demo.py ```
 
-## Analyse an image and return the result: TODO
+## Analyse an image and return the result:
 
 ``` compare.py --image IMAGE ```
 
 where IMAGE is the path of the image. It searches the good brand associated with the watch submitted.
+
+## Limits:
+
+My database contains only 1520 watches with the same position by class. Watches with different position are not represented in the database. So I have bad results with the watches tested that have "noise". I can ameliorate the result with other images of watches inclinated and in different points of view for example.
+
