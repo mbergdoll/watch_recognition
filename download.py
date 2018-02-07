@@ -9,8 +9,12 @@ from bs4 import BeautifulSoup, Comment
 import requests
 from mpi4py import MPI
 from pathlib import Path
+from PIL import Image
 
-# mpiexec -n 10 python download.py
+input_w=32
+input_h=52
+
+# mpiexec -n 2 python download.py
 
 # extract url from a list of url to download
 def extract_name_from_name():
@@ -36,14 +40,24 @@ def boucle( begin , end , tot , list_name , c):
 				pr = name.split('/')[-1][0:25].replace('\n','')
 				if my_file.is_file():
 				    # exists
-					print( str(tot)+" / "+str(c)+" --"+pr+"-- (yet analysed)" )
+					print( str(tot)+" / "+str(c)+" --"+pr+"-- (yet analysed)")
 				else:
 				    # doesn't exist
 					save_image_from_url( name.replace('\n','') , c )
 					remaining = end-c
 					print( str(remaining)+" remaining..."+str(name.split('/')[-1][0:30].replace('\n','') ) )
+					try:
+						# convert image in JPG format
+						im = Image.open( "watches/" + str(c) + ".jpg" )
+						im = im.convert("RGB")
+						im = im.resize( ( input_w , input_h ) )
+						im.save( "watches_prepared/" + str(c) + ".jpg" )
+					except:
+						print("error to convert format...")
+
 		except:
 			print("error...")
+
 		c=c+1
 
 comm = MPI.COMM_WORLD
@@ -66,6 +80,3 @@ for i in range(size):
 		print( "pas:" + str(pas) )
 	if( rank==i ):
 		boucle( begin+(i*pas) , min( tot , begin+((i+1)*pas) ) , tot , list_name , c)
-
-print("copying images in watch_prepared/ with the same size 32x52 in jpg format")
-os.system("")

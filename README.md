@@ -14,11 +14,11 @@ If you want to donwload image, You have to download MPI.
 # Commands
 ## Downloading images from text file (optional)
 
-``` mpiexec -n 10 python download.py ```
+``` mpiexec -n 2 python download.py ```
 
 ## Pre-processing
 
-All images will be converted in 32x52 pixels in a JPG format.
+All images will classified n train and val folder and in class.
 Before training, you need to pre-process the data with the command:
 
 ``` prepare.py ```
