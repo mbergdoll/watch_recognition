@@ -14,17 +14,13 @@ import matplotlib.pyplot as plt
 import time
 import os
 import copy
-
-import matplotlib.pyplot as plt
-
-from torch.autograd import Variable
-import torch.nn as nn
 import torch.nn.functional as F
 import sys
 import Model_CNN
 import PIL
 from PIL import Image
 
+from constante import *
 
 ######################################################################
 # Visualize a few images
@@ -69,13 +65,8 @@ else:
 
 	print("path: "+str(path) )
 
-	input_w=32
-	input_h=52
 	image = Image.open( path )
 
-	data_dir = 'watches_classed'
-	input_w=32
-	input_h=52
 	# Data augmentation and normalization for training
 	# Just normalization for validation
 	data_transforms = {

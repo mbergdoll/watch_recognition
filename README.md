@@ -27,11 +27,7 @@ We convert image to jpg format and 32x52 pixels.
 
 ## Training
 
-``` train.py ```
-
-## Demo: It gives statistical data from the results of the training.
-
-``` demo.py ```
+``` train.py --iterations 20 ```
 
 ## Analyse an image and return the result:
 
