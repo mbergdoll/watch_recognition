@@ -7,7 +7,7 @@ Create an AI that can recognize famous watches like IWC or Hublot due to a deep 
 Principles of the project:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/mbergdoll/watch_recognition/master/Capture.PNG" width="350"/>
+  <img src="https://raw.githubusercontent.com/mbergdoll/watch_recognition/master/Capture.PNG" width="50%"/>
 </p>
 
 ###1st step: detect watches in images: OpenCV
