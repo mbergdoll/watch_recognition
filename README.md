@@ -10,12 +10,12 @@ Principle of the project:
   <img src="https://raw.githubusercontent.com/mbergdoll/watch_recognition/master/Capture.PNG" width="500px"/>
 </p>
 
-###1st step: detect watches in a image: OpenCV
+1st step: detect watches in a image: OpenCV
 
 I have used 1,500 images of watches and 10,000 images whithout watches inside.
 The result is a xml file (watches.xml)
 
-###2nd step: train a neural network to label watches: Pytorch
+2nd step: train a neural network to label watches: Pytorch
 
 I train the CNN with 1,500 watches of 8 different classes.
 
