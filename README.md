@@ -17,7 +17,10 @@ The result is a xml file (watches.xml)
 
 2nd step: train a neural network to label watches: Pytorch
 
-I train the CNN with 1,500 watches of 8 different classes.
+I train the CNN with 1,500 watches of 8 different classes.the picture linear model loss testifies that the model converges and so learn to recognize this set of watches.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/mbergdoll/watch_recognition/master/linear_model_loss.png" width="200px"/>
+</p>
 
 ## Prerequisites
 
