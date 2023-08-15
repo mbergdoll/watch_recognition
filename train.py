@@ -21,6 +21,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 import argparse
+from util.constante import *
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--iterations", type=int,default=10,help="number of iterations")
 args = parser.parse_args()
@@ -33,7 +35,6 @@ print("iterations:"+str(max_it) )
 #
 # We will use torchvision and torch.utils.data packages for loading the
 # data.
-from constante import *
 
 # Data augmentation and normalization for training
 # Just normalization for validation
@@ -65,7 +66,7 @@ print("number of classes:"+str(number_of_classes) )
 ########################################################################
 # 2. Define a Convolution Neural Network
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-import Model_CNN
+import util.modelCNN as modelCNN
 
 ########################################################################
 # 3. Define a Loss function and optimizer
@@ -74,7 +75,7 @@ import Model_CNN
 
 import torch.optim as optim
 
-net = Model_CNN.Net()
+net = modelCNN.Net()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
@@ -102,8 +103,8 @@ max_val=0
 for i, data in enumerate(valloader, 0):
 	max_val = max_val+1
 
-print( "n° of training:"+str(max_train) )
-print( "n° of validation:"+str(max_val) )
+print( "n° (training):"+str(max_train) )
+print( "n° (validation):"+str(max_val) )
 print('Training...')
 
 for it in range(max_it):
@@ -119,24 +120,20 @@ for it in range(max_it):
 		optimizer.zero_grad()
 		# forward + backward + optimize
 		outputs = net(inputs)
-		#print( outputs.data.numpy()[0] )
-		#print( "*"+str( outputs.data.numpy().argmax() ) )
+
 		loss = criterion(outputs, labels)
 		loss.backward()
 		optimizer.step()
 		# print statistics
-		#print(loss)
 		running_loss += loss.data[0]
-		#print(str(i+1)+"/"+str(max_train))
-		#print( " labels :"+str(labels.data.numpy()[0]) )
-		#print( " labels~:"+str(outputs.data.numpy()[0].argmax()) )
+
 		if( labels.data.numpy()[0] != outputs.data.numpy()[0].argmax() ):
 			sum_labels+=1
 		else:
 			sum_labels+=0
 	taux = ( sum_labels / max_train )
 	
-	print("--- Itération %d ---" % it)
+	print("--- Iteration %d ---" % it)
 	print("Apprentissage: loss: %.7f (error rate=%.1f%%)" % (running_loss/max_train, 100*taux ) ) 
 	res = res + [ taux ]
 
@@ -149,15 +146,12 @@ for it in range(max_it):
 		# wrap them in Variable
 		inputs, labels = Variable(inputs), Variable(labels)
 		# zero the parameter gradients
-		#optimizer.zero_grad()
 		# forward + backward + optimize
 		outputs = net(inputs)
 		loss = criterion(outputs, labels)
 		loss.backward()
-		#optimizer.step()
 		# print statistics
 		running_loss2 += loss.data[0]
-		#print(str(i+1)+"/"+str(max_val))
 		if( labels.data.numpy()[0] != outputs.data.numpy()[0].argmax() ):
 			sum_labels+=1
 		else:
@@ -168,7 +162,7 @@ for it in range(max_it):
 	c=c+1
 	abscisse = abscisse + [ c ]
 
-print('Finished Training...')
+print('Training completed...')
 
 import matplotlib.pyplot as plt
 p1=plt.plot( abscisse , res ,color='blue')
@@ -183,5 +177,5 @@ import pickle
 
 # copy you entirely object and save it 
 saved_trainer = copy.deepcopy( net )
-with open(r"parameters.dat", "wb") as output_file:
+with open(r"util/parameters.dat", "wb") as output_file:
     pickle.dump(saved_trainer, output_file)

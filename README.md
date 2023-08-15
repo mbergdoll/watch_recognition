@@ -29,9 +29,6 @@ At the moment, there are a base class and examples for PyTorch and OpenCV.
 If you want to download image from internet, you have to download MPI.
 
 # Commands
-## Downloading images from a list of urls (optional)
-
-``` mpiexec -n 2 python download.py ```
 
 ## Pre-processing
 

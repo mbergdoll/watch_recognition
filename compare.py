@@ -16,11 +16,12 @@ import os
 import copy
 import torch.nn.functional as F
 import sys
-import Model_CNN
+import util.modelCNN as modelCNN
 import PIL
 from PIL import Image
-
-from constante import *
+import copy
+import pickle
+from util.constante import *
 
 ######################################################################
 # Visualize a few images
@@ -43,10 +44,8 @@ def imshow(inp, title=None):
 ######################################################################
 # Load Model
 # ^^^^^^^^^^^^^^^^^^^^^^
-def load_model():
-	import copy
-	import pickle
-	with open('parameters.dat', 'rb') as fid:
+def loadModel():
+	with open('util/parameters.dat', 'rb') as fid:
 	    net = pickle.load(fid)
 
 	print("Model & parameters loaded...")
@@ -59,9 +58,9 @@ def load_model():
 if( len(sys.argv)!=3 ):
 	print("./compare.py --image test/1.jpg")
 else:
-	path = sys.argv[2] # ./compare.py --image Image
-	net = Model_CNN.Net()
-	net = load_model()
+	path = sys.argv[2]
+	net = modelCNN.Net()
+	net = loadModel()
 
 	print("path: "+str(path) )
 
@@ -92,13 +91,6 @@ else:
 
 	dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
 	class_names = image_datasets['train'].classes
-	
-	#dataiter = iter( dataloaders['val'] )
-	#images, labels = dataiter.next() # images => [torch.FloatTensor of size 4x3x52x32]
-	#imshow(torchvision.utils.make_grid(images))
-	#outputs = net(Variable(images))
-	#_, predicted = torch.max(outputs.data, 1)
-	#print('Predicted: %s' % class_names[predicted[0]] ) 
 
 	image = Image.open( path )
 	to_tensor = transforms.Compose([
@@ -112,8 +104,7 @@ else:
 	        transforms.ToTensor(),
 	    ])
 	img_initale = to_tensor( image_initiale )
-	#print( img )
-	# print images 
+	 
 	imshow(torchvision.utils.make_grid(img_initale))
 	outputs = net(Variable(img))
 	_, predicted = torch.max(outputs.data, 1)
